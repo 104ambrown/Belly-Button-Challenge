@@ -57,6 +57,23 @@ function plotThis(bbData) {
         // declaring variable for bubblechart data
         var chartOfBubblesData = [chartOfBubbles];
         // generating bubble chart
-        Plotly.newPlot("bubble", chartOfBubblesData, chartOfBubblesLayout)
-    }};
+        Plotly.newPlot("bubble", chartOfBubblesData, chartOfBubblesLayout);
+
+// writing a function to initialize all of the above code
+function initialize() {
+    d3.json("samples.json").then((data) => {
+        // populating dropdown with names
+        data.names.forEach((name) => {
+            d3.select("#selDataset").append("option").text(name).proprty("value");
+        });
+        plotThis(data.names[0]);
+        demographic(data.names[0]);
+    });
+};
+initialize();
+
+// writing a function when an event occurs
+function eventChange(bbData){
+    plotThis(bbData);
+    demographic(bbData);
 };
