@@ -25,9 +25,26 @@ function plotThis(bbData) {
         //console.log(data);
 
         // Using ID to filter wash frequency
-        var washFrequency = data.metadata.filter(wf.id.toString() === bbData)[0];
-        washFrequency = washFrequency.washFrequency;
-        //console.log("Washing frequency: " + wasFrequency);
+        var washFrequency = data.metadata.filter(wfreq.id.toString() === bbData)[0];
+        wfreq = wfreq.washFrequency;
+        console.log("Washing frequency: " + washFrequency);
+        // filter samples by id
+        var samples = data.samples.filter(sample => sample.id.toString() === bbData)[0];
+        // top ten samples
+        var topTen = (samples.sample_values.slice(0, 10)).reverse();
+        console.log("Top Ten Bacteria samples found: " + topTen);
+        // top ten otu ids
+        var topTenOTUs = (samples.otu_ids.slice(0, 10)).reverse();
+        var otuId = otu.map(number => "OTU " + number)
+        console.log("OTU IDs: " + otuID);
+        // declaring label variable
+        var labels = samples.otu_labels.slice(0, 10).revers();
+        console.log("labels: " + labels);
+        // declaring bar chart variable
+        // declaring variable for bar chart data
+        // generating bar chart
+        // declaring bubble chart variable
+        // declaring variable for the bubble chart layout
 }
 
 
