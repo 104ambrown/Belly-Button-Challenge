@@ -43,7 +43,7 @@ function plotThis(bbData) {
 
 
         // declaring bar chart variable
-        var chartOfBars = {x: samples, y: otuID, text: labels, type="bar", orientation: "h",};
+        var chartOfBars = {x: samples, y: otuID, text: labels, type:"bar", orientation: "h",};
         // declaring variable for bar chart data
         var chartOfBarsData = [chartOfBars];
         // generating bar chart
@@ -53,7 +53,7 @@ function plotThis(bbData) {
         // declaring bubble chart variable
         var chartOfBubbles = {x: sample.otu_ids, y: sample.samples, mode: "markers", marker: {size: sample.samples, color: sample.otuIDs}, tesxt: samples.otu_labels};
         // declaring variable for the bubble chart layout
-        var chartOfBubblesLayout + {xaxis:{title: "OTU ID"}, height:600, width: 1200};
+        var chartOfBubblesLayout = {xaxis:{title: "OTU ID"}, height:600, width: 1200};
         // declaring variable for bubblechart data
         var chartOfBubblesData = [chartOfBubbles];
         // generating bubble chart
@@ -76,4 +76,4 @@ initialize();
 function eventChange(bbData){
     plotThis(bbData);
     demographic(bbData);
-};
+}})};
