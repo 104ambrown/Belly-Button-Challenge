@@ -25,7 +25,7 @@ function plotThis(bbData) {
         //console.log(data);
 
         // Using ID to filter wash frequency
-        var washFrequency = data.metadata.filter(wfreq.id.toString() === bbData)[0];
+        var washFrequency = data.metadata.filter(wfreq => wfreq.id.toString() === bbData)[0];
         wfreq = wfreq.washFrequency;
         console.log("Washing frequency: " + washFrequency);
         // filter samples by id
@@ -49,23 +49,14 @@ function plotThis(bbData) {
         // generating bar chart
         Plotly.newPlot("bar". chartOfBarsData);
 
-        
+
         // declaring bubble chart variable
+        var chartOfBubbles = {x: sample.otu_ids, y: sample.samples, mode: "markers", marker: {size: sample.samples, color: sample.otuIDs}, tesxt: samples.otu_labels};
         // declaring variable for the bubble chart layout
-}
-
-
-// Washing Frequency gauge
-function washFreqGauge(bbData) {
-    d3.json("samples.json").then((data)=> {
-        var objects = data.metadata;
-        var gaugeArray = metadata.filter(info => info.id.toString() == bbInfo);
-        var gaugeResults = gaugeArray[0]
-        var survey = d3.select("#bbInfo-metadata");
-        survey.html("");
-        Object.entries(gaugeArray).forEach((key, value) => {
-            survey.append("h6").text(`${key}: ${value}`);
-        });
-}
-    });
-}
+        var chartOfBubblesLayout + {xaxis:{title: "OTU ID"}, height:600, width: 1200};
+        // declaring variable for bubblechart data
+        var chartOfBubblesData = [chartOfBubbles];
+        // generating bubble chart
+        Plotly.newPlot("bubble", chartOfBubblesData, chartOfBubblesLayout)
+    }};
+};
