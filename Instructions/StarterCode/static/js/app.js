@@ -40,9 +40,16 @@ function plotThis(bbData) {
         // declaring label variable
         var labels = samples.otu_labels.slice(0, 10).revers();
         console.log("labels: " + labels);
+
+
         // declaring bar chart variable
+        var chartOfBars = {x: samples, y: otuID, text: labels, type="bar", orientation: "h",};
         // declaring variable for bar chart data
+        var chartOfBarsData = [chartOfBars];
         // generating bar chart
+        Plotly.newPlot("bar". chartOfBarsData);
+
+        
         // declaring bubble chart variable
         // declaring variable for the bubble chart layout
 }
