@@ -7,17 +7,32 @@ function getData(bbData){
 
         
         // Filtering belly button data by sample_values and ID
-        var resultsArray = metadata.filter(info => info.id.toString() == bbData);
-        var results = resultsArray[0]
+        var resultsArray = metadata.filter(info => info.id == bbData);
+        var result = resultsArray[0]
         var panel = d3.select("#bbInfo-metadata");
         // Clearing existing metadata
         panel.html("");
         // Adding eac hkey value pair to panel
-        Object.entries(resultsArray).forEach((key, value) => {
-            panel.append("p").text(`${key}: ${value}`);
+        Object.entries(resultsArray).forEach(([key, value]) => {
+            panel.append("h6").text(`${key}: ${value}`);
         });
+
+
     });
 };
+
+// building a bar chart //
+
+// Building a bubble chart //
+
+// building a washing frequency gauge //
+
+
+
+
+
+
+
 
 // basic function of pulling data in for the plots
 function plotThis(bbData) {
