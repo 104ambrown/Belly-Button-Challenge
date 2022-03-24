@@ -1,30 +1,30 @@
 // Plotly Belly Button Biodiversity Homework
-// Writing a function to pull the data in
+// Writing a skeleton function to pull the data in
 function getData(bbData){
     d3.json("samples.json").then((data)=> {
         var metadata = data.metadata;
         //console.log(metadata);
-
-        
         // Filtering belly button data by sample_values and ID
         var resultsArray = metadata.filter(info => info.id == bbData);
         var result = resultsArray[0]
         var panel = d3.select("#bbInfo-metadata");
         // Clearing existing metadata
         panel.html("");
-        // Adding eac hkey value pair to panel
-        Object.entries(resultsArray).forEach(([key, value]) => {
+        // Adding each key value pair to panel
+        Object.entries(result).forEach(([key, value]) => {
             panel.append("h6").text(`${key}: ${value}`);
         });
-
-
     });
 };
 
 // Writing a function to build the charts using d3.json to retrieve the somple data
-function buildCharts(sample) {
+function buildCharts(bbData) {
 d3.json("samples.json").then((data) => {
-    var samples= data.samples)
+    var samples= data.samples;
+    var resultsArray = metadata.filter(info => info.id == bbData);
+    var result = resultsArray[0]
+    var ids = result.otu_labels;
+    var values = result.sample_values;
 
 // building a bar chart //
     var barData = [
@@ -44,9 +44,24 @@ d3.json("samples.json").then((data) => {
     Plotly.newPlot("bar", barData, barLayout);
 });
 }
-
 // Building a bubble chart //
-
+var bubbleLayout = {
+    margin: {t: 0 },
+    xaxis: {title: "OTU ID" },
+    hovermode: "closest",
+    };
+var bubbleData = [
+{
+    x: ids,
+    y: values,
+    text: labels,
+    mode: "markers",
+    marker: {
+        color: ids,
+        size: values,
+        }
+    }
+];
 // building a washing frequency gauge //
 
 
