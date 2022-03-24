@@ -7,37 +7,38 @@ function getData(sample){
         // Filtering belly button data by sample_values and ID
         var resultsArray = metadata.filter(sampleObject => 
             sampleObject.id == sample);
-        var result = resultsArray[0]
         var panel = d3.select("#sample-metadata");
         // Clearing existing metadata
         panel.html("");
         // Adding each key value pair to panel
-        Object.entries(result).forEach(([key, value]) => {
-            panel.append("h5").text(`${key}: ${value}`);
+        Object.entries(resultsArray).forEach(([key, value]) => {
+            panel.append("h5").text(key[0]: value[1]);
         });
     });
-}
 
 // Writing a function to build the bar and bubble charts using d3.json to retrieve the somple data
 function buildCharts(sample) {
-d3.json("samples.json").then((data) => {
-    var samples= data.samples;
-    var resultsArray = samples.filter(sampleObject => 
+    d3.json("samples.json").then((data) => {
+        // console.log(data)
+        var washFreq = data.metadat.filter((wf => wf.id.toString() === sample[0]))
+
+        var samples= data.samples;
+        var resultsArray = samples.filter(sampleObject => 
         sampleObject.id == sample);
-    var result = resultsArray[0]
-    var sampleIDs = result.otu_ids;
-    var labels = result.otu_labels;
-    var values = result.sample_values;
+        var result = resultsArray[0]
+        var id = result.otu_ids;
+        var labels = result.otu_labels;
+        var values = result.sample_values;
 
 // selecting bar and bubble chart data//
     var bubbleData = [
         {
-            x: sampleIDs,
+            x: id,
             y: values,
             text: labels,
             mode: "markers",
             marker: {
-            color: sampleIDs,
+            color: id,
             size: values,
         }
     }]
@@ -50,7 +51,7 @@ d3.json("samples.json").then((data) => {
     Plotly.newPlot("bubble", bubbleData, bubbleLayout);
     var barData = [
         {
-            y:sampleIDs.slice(0,10).map(otuID => `OTU ${otuID}`).reverse(),
+            y:id.slice(0,10).map(otuID => `OTU ${otuID}`).reverse(),
             x:values.slice(0,10).reverse(),
             text: labels.slice(0,10).reverse(),
             type: "bar",
@@ -153,14 +154,14 @@ function buildAGauge(data) {
 function init() {
 var selector = d3.select("#selDataset");
 d3.json("samples.json").then((data)=> {
-    var sampleIDs = data.names;
-    sampleIDs.forEach((sample) => {
+    var id = data.names;
+    id.forEach((sample) => {
         selector
             .append("option")
             .text(sample)
             .property("value", sample);
     });
-    const firstSample = sampleIDs[0];
+    const firstSample = id[0];
     getData(firstSample);
     buildCharts(firstSample);
     buildAGauge(firstSample)
