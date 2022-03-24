@@ -66,10 +66,10 @@ Plotly.newPlot("bubble", bubbleData, bubbleLayout);
 
 // Function to build the gauge chart
 // used https://htmlcolorcodes.com/color-picker/        
-var gaugeColorPallette = ["#fffff", "#B0FFB5", "#7Aff82","#4FEE58", "#4FEEA8", "#4FE5EE", "#4F95EE", "#584FEE", "#A84FEE"
+var gaugeColorPallette = ["#fffff", "#B0FFB5", "#7Aff82","#4FEE58", "#4FEEA8", "#4FE5EE", "#4F95EE", "#584FEE", "#A84FEE",
 
 
-function buildAGauge(data {
+function buildAGauge(data) {
     console.log("buildAGauge", data);
     if(data.wfreq === null){
         data.wfreq = 0;
@@ -84,9 +84,9 @@ function buildAGauge(data {
 
     let mainPath = 'M -.0 -0.025 L .0 0.025 L ',
         xPath = String(x),
-        space = ' ',
+        space = " ",
         yPAth = String(y),
-        pathEnd = ' Z';
+        pathEnd = " Z";
     let path = mainPath.concat(xPath, space, yPath, pathEnd);
     let trace = [{ type: "scatter",
         x:[0], y:[0],
@@ -108,7 +108,27 @@ function buildAGauge(data {
         hole: .5,
         type: "pie",
         showlegend: false
-}];
+    }];
+    let layout = {
+        shapes:[{
+            type: "path",
+            path: path,
+            fillColor: "#923DE9",
+            line: {
+                color: "#923DE9"
+            }
+        }],
+    title: "<b>Belly Button Washing Frequency</b> <br> <b>Scrubs per Week</b>",
+    height: 500,
+    width 500,
+    x_axis: {zeroline:false, showTickLabels:false,
+                showgrid:false, range:[-1, 1]},
+    y_axis: {zeroline:false, showTickLabels:false,
+                showgrid:false, range:[-1, 1]},
+    };
+    
+    Plotly.newPlot("gauge", trace, layout, {responsive: true});
+},
 
 // basic function of pulling data in for the dropdown menu
 function initialize() {
@@ -125,60 +145,12 @@ var selection = d3.select("#selDataset");
         getData(firstSample);
         buildCharts(firstSample);
         build
-
-        //console.log(data);
-
-
-        // Using ID to filter wash frequency
-        var washFrequency = data.metadata.filter(wfreq => wfreq.id.toString() === bbData)[0];
-        wfreq = wfreq.washFrequency;
-        console.log("Washing frequency: " + washFrequency);
-        // filter samples by id
-        var samples = data.samples.filter(sample => sample.id.toString() === bbData)[0];
-        // top ten samples
-        var topTen = (samples.sample_values.slice(0, 10)).reverse();
-        console.log("Top Ten Bacteria samples found: " + topTen);
-        // top ten otu ids
-        var topTenOTUs = (samples.otu_ids.slice(0, 10)).reverse();
-        var otuId = otu.map(number => "OTU " + number)
-        console.log("OTU IDs: " + otuID);
-        // declaring label variable
-        var labels = samples.otu_labels.slice(0, 10).revers();
-        console.log("labels: " + labels);
-
-
-        // declaring bar chart variable
-        var chartOfBars = {x: samples, y: otuID, text: labels, type:"bar", orientation: "h",};
-        // declaring variable for bar chart data
-        var chartOfBarsData = [chartOfBars];
-        // generating bar chart
-        Plotly.newPlot("bar". chartOfBarsData);
-
-
-        // declaring bubble chart variable
-        var chartOfBubbles = {x: sample.otu_ids, y: sample.samples, mode: "markers", marker: {size: sample.samples, color: sample.otuIDs}, tesxt: samples.otu_labels};
-        // declaring variable for the bubble chart layout
-        var chartOfBubblesLayout = {xaxis:{title: "OTU ID"}, height:600, width: 1200};
-        // declaring variable for bubblechart data
-        var chartOfBubblesData = [chartOfBubbles];
-        // generating bubble chart
-        Plotly.newPlot("bubble", chartOfBubblesData, chartOfBubblesLayout);
-
-// writing a function to initialize all of the above code
-function initialize() {
-    d3.json("samples.json").then((data) => {
-        // populating dropdown with names
-        data.names.forEach((name) => {
-            d3.select("#selDataset").append("option").text(name).proprty("value");
-        });
-        plotThis(data.names[0]);
-        demographic(data.names[0]);
     });
-};
-initialize();
-
-// writing a function when an event occurs
-function eventChange(bbData){
-    plotThis(bbData);
-    demographic(bbData);
-}})};
+    },
+    function optionChange(newSample) {
+    buildMetadata(newSample);
+    buildCharts(newSample);
+    buildAGauge(newSample)
+    },
+    // Initializing the dashboard
+    initialize();
