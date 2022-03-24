@@ -21,7 +21,29 @@ function getData(bbData){
     });
 };
 
+// Writing a function to build the charts using d3.json to retrieve the somple data
+function buildCharts(sample) {
+d3.json("samples.json").then((data) => {
+    var samples= data.samples)
+
 // building a bar chart //
+    var barData = [
+        {
+            y:ids.slice(0,10).map(otu => `OTU ${otuID}`).reverse(),
+            x:values.slice(0,10).reverse(),
+            text: labels.slice(0,10).reverse(),
+            type: "bar",
+            orientation: "h"
+        }
+    ];
+    var barLayout = {
+        title: "10 most popular Bacteria Cultures",
+        margin: { t:30, 1:150 }
+    };
+
+    Plotly.newPlot("bar", barData, barLayout);
+});
+}
 
 // Building a bubble chart //
 
