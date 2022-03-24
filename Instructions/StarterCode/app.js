@@ -29,7 +29,25 @@ d3.json("samples.json").then((data) => {
     var labels = result.otu_labels;
     var values = result.sample_values;
 
-// building a bar chart //
+// selecting bar and bubble chart data//
+    var bubbleData = [
+        {
+            x: sampleIDs,
+            y: values,
+            text: labels,
+            mode: "markers",
+            marker: {
+            color: sampleIDs,
+            size: values,
+        }
+    }]
+    var bubbleLayout = {
+        margin: {t: 0 },
+        xaxis: {title: "OTU ID" },
+        hovermode: "closest",
+        };
+
+    Plotly.newPlot("bubble", bubbleData, bubbleLayout);
     var barData = [
         {
             y:sampleIDs.slice(0,10).map(otuID => `OTU ${otuID}`).reverse(),
@@ -45,32 +63,15 @@ d3.json("samples.json").then((data) => {
     };
 
     Plotly.newPlot("bar", barData, barLayout);
-});
+})
 }
 // Building a bubble chart //
-        var bubbleData = [
-        {
-            x: sampleIDs,
-            y: values,
-            text: labels,
-            mode: "markers",
-            marker: {
-                color: ids,
-                size: values,
-                }
-            }
-        ];
-    var bubbleLayout = {
-        margin: {t: 0 },
-        xaxis: {title: "OTU ID" },
-        hovermode: "closest",
-        };
+    
 
-Plotly.newPlot("bubble", bubbleData, bubbleLayout);
 
 // Function to build the gauge chart
 // used https://htmlcolorcodes.com/color-picker/        
-var gaugeColorPallette = ["#fffff", "#B0FFB5", "#7Aff82","#4FEE58", "#4FEEA8", "#4FE5EE", "#4F95EE", "#584FEE", "#A84FEE",
+var arrgaugeColorPallette = ["#fffff", "#b0ffb5", "#7Aff82","#4FEE58", "#4FEEA8", "#4FE5EE", "#4F95EE", "#584FEE", "#A84FEE"]
 
 function constrGaugeChrt(sample) {
     console.log("sample", sample);
@@ -82,7 +83,7 @@ function constrGaugeChrt(sample) {
             //console.log("constrGaugeChrt matchSampleObject", matchSampleObject);
         buildAGauge(matchSampleObject[0]);
     });
-},
+}
 function buildAGauge(data) {
     console.log("buildAGauge", data);
     if(data.wfreq === null){
@@ -146,7 +147,7 @@ function buildAGauge(data) {
     };
     
     Plotly.newPlot("gauge", trace, layout, {responsive: true});
-},
+}
 
 // basic function of pulling data in for the dropdown menu
 function init() {
@@ -164,13 +165,13 @@ d3.json("samples.json").then((data)=> {
     buildCharts(firstSample);
     buildAGauge(firstSample)
     });
-    },
+    }
 
 function optionChange(newSample) {
 getData(newSample);
 buildCharts(newSample);
 buildAGauge(newSample);
-},
+}
 
 // Initializing the dashboard
-init()];
+init();
