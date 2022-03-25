@@ -1,8 +1,19 @@
 console.log("beginning");
 // Plotly Belly Button Biodiversity Homework
+// writing a function to initialize all of the above code
+function init() {
+    d3.json("StarterCode/data/samples.json").then((data) => {
+        // populating dropdown with names
+        data.names.forEach((name) => {
+            d3.select("#selDataset").append("optionChanged").text(name).property("value");
+        });
+        plotThis(data.names[0]);
+        getData(data.names[0]);
+    });
+console.log("init")
 // Writing a function to pull the data in
 function getData(bbData){
-    d3.json("samples.json").then((data)=> {
+    d3.json("StarterCode/data/samples.json").then((data)=> {
         var metadata = data.metadata;
         console.log(metadata);
 
@@ -21,13 +32,14 @@ function getData(bbData){
     });
 };
 console.log("getData");
+
 // basic function of pulling data in for the plots
 function plotThis(bbData) {{
-    d3.json("samples.json").then((data)=> {
+    d3.json("StarterCode/data/samples.json").then((data)=> {
         console.log(bbData);
         // Using ID to filter wash frequency
         var washFrequency = data.metadata.filter(wfreq => wfreq.id.toString() === bbData)[0];
-        wfreq = wfreq.wfreq;
+        washFrequency = washFrequency.wfreq;
         console.log("Washing frequency: " + washFrequency);
         // filter samples by id
         var samples = data.samples.filter(sample => sample.id.toString() === bbData)[0];
@@ -42,9 +54,8 @@ function plotThis(bbData) {{
         console.log("OTU IDs: " + otuId);
         // declaring label variable
         var labels = samples.otu_labels.slice(0, 10).reverse();
-        console.log("labels: " + labels);
-
-
+        console.log("labels: " + labels)
+    
 
         // declaring bar chart variable
         var chartOfBars = {
@@ -85,19 +96,10 @@ function plotThis(bbData) {{
         console.log(bubbleChartData);
         // generating bubble chart
         Plotly.newPlot("bubble", bubbleChartData, chartOfBubblesLayout);
-    });
-    console.log("plotThis");
+    })};
 }};
-// writing a function to initialize all of the above code
-function init() {
-    d3.json("samples.json").then((data) => {
-        // populating dropdown with names
-        data.names.forEach((name) => {
-            d3.select("#selDataset").append("optionChanged").text(name).property("value");
-        });
-        plotThis(data.names[0]);
-        getData(data.names[0]);
-    });
+    console.log("plotThis");
+;
 
 init();
 console.log("init");
@@ -106,5 +108,4 @@ function optionChanged(bbData){
     plotThis(bbData);
     getData(bbData);
 };
-console.log("end")
-};
+console.log("end");
