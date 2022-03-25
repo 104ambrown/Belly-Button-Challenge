@@ -35,7 +35,7 @@ console.log("getData");
 
 // basic function of pulling data in for the plots
 function plotThis(bbData) {{
-    d3.json("StarterCode/data/samples.json").then((bbData) => {
+    d3.json("StarterCode/data/samples.json").then((data)=> {
         console.log(bbData);
         // Using ID to filter wash frequency
         var washFrequency = data.metadata.filter(wfreq => wfreq.id.toString() === bbData)[0];
@@ -55,7 +55,7 @@ function plotThis(bbData) {{
         // declaring label variable
         var labels = samples.otu_labels.slice(0, 10).reverse();
         console.log("labels: " + labels)
-
+    
 
         // declaring bar chart variable
         var chartOfBars = {
@@ -71,6 +71,8 @@ function plotThis(bbData) {{
         console.log(barChartData);
         // generating bar chart
         Plotly.newPlot("bar", barChartData);
+
+
         // declaring bubble chart variable
         var chartOfBubbles = {
             x: samples.otu_ids,
@@ -98,3 +100,12 @@ function plotThis(bbData) {{
 }};
     console.log("plotThis");
 ;
+
+init();
+console.log("init");
+// writing a function when an event occurs
+function optionChanged(bbData){
+    plotThis(bbData);
+    getData(bbData);
+};
+console.log("end");
