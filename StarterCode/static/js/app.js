@@ -59,21 +59,6 @@ function plotThis(bbData) {{
 
         // declaring bar chart variable
         var chartOfBars = {
-
-    
-          
-            
-    
-
-          
-          
-            
-    
-
-          
-    
-    @@ -85,19 +96,10 @@ function plotThis(bbData) {{
-  
             x: samples,
             y: otuId,
             text: labels,
