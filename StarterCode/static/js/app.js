@@ -35,7 +35,7 @@ console.log("getData");
 
 // basic function of pulling data in for the plots
 function plotThis(bbData) {{
-    d3.json("StarterCode/data/samples.json").then((data)=> {
+    d3.json("StarterCode/data/samples.json").then((bbData) => {
         console.log(bbData);
         // Using ID to filter wash frequency
         var washFrequency = data.metadata.filter(wfreq => wfreq.id.toString() === bbData)[0];
@@ -43,16 +43,6 @@ function plotThis(bbData) {{
         console.log("Washing frequency: " + washFrequency);
         // filter samples by id
         var samples = data.samples.filter(sample => sample.id.toString() === bbData)[0];
-
-    
-        
-          
-    
-
-        
-    
-function plotThis(bbData) {{
-  
         console.log(samples);
         // top ten samples
         var topTen = (samples.sample_values.slice(0, 10)).reverse();
